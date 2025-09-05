@@ -1,0 +1,196 @@
+{
+    "personalInfo": {
+        "name": "Iraveen Rathna raj",
+        "title": "Software Engineer - III (Full Stack)",
+        "location": "Chennai, India",
+        "contact": {
+            "email": "iraveen.98@gmail.com",
+            "phone": "+91 8248862273"
+        },
+        "links": {
+            "linkedin": "linkedin.com/in/iraveen",
+            "github": "github.com/Raveenrathnaraj",
+            "portfolio": "iraveen.com"
+        }
+    },
+    "summary": "Results-driven Full Stack Developer with around 6 years of experience designing and developing scalable web applications. Strong collaborator with a passion for optimizing performance, writing clean, maintainable code, and leading cross-functional teams to deliver high-quality solutions.",
+    "technicalSkills": [
+        {
+            "category": "Frontend",
+            "skills": [
+                "React",
+                "Next JS",
+                "Javascript",
+                "Typescript",
+                "HTML",
+                "CSS 3",
+                "Tailwind",
+                "MUI",
+                "Radix UI",
+                "ShadCN UI"
+            ]
+        },
+        {
+            "category": "Backend and Databases",
+            "skills": [
+                "Node js - Express",
+                "Java - Springboot",
+                "Python - Flask",
+                "Oracle",
+                "Postgres",
+                "Mongo"
+            ]
+        },
+        {
+            "category": "Mobile",
+            "skills": [
+                "React Native",
+                "Progressive Web Apps (PWA | TWA)"
+            ]
+        },
+        {
+            "category": "Web services & Hosting",
+            "skills": [
+                "AWS (S3, Lambda, Amplify)",
+                "Kafka",
+                "Redis",
+                "Vercel",
+                "Firebase (Auth, Storage, Realtime DB, Cloud Messaging)",
+                "Web sockets",
+                "Payment Gateways (Stripe & Razorpay)"
+            ]
+        },
+        {
+            "category": "Other Skills",
+            "skills": [
+                "Responsive Web Development",
+                "Microfrontend",
+                "Database Design and Optimization",
+                "Version Control - GIT",
+                "SEO",
+                "Prompt Engineering",
+                "Retrieval-Augmented Generation (RAG)",
+                "Client and server side caching",
+                "Data Structures and Algorithms",
+                "High Level System Design",
+                "Low level System Design"
+            ]
+        }
+    ],
+    "workExperience": [
+        {
+            "title": "Software Development Engineer - III (Full Stack)",
+            "company": "Verizon",
+            "titles": [
+                {
+                    "title": "Software Development Engineer - III (Full Stack)",
+                    "startDate": "08/2023",
+                    "endDate": "Present"
+                }
+            ],
+            "location": "Chennai, India",
+            "responsibilities": [
+                "Developed full-stack features (React/Node.js) to enhance network technician efficiency, collaborating with product owners and users to gather requirements and deliver end-to-end solutions.",
+                "Managed Linux development and production servers via SSH, handled Node.js microservices with PM2, and supported deployments and troubleshooting.",
+                "Improved full-stack performance: optimized React rendering, implemented frontend caching, reduced API response times, and enhanced database queries with indexes and partitions.",
+                "Maintained code quality and security through regular SonarQube and Fortify checks while deploying through Jenkins pipeline.",
+                "Monitored and optimized APIs and user experience using New Relic and Quantum Metrics for real-time issue detection and resolution."
+            ]
+        },
+        {
+            "title": "Senior Software Engineer - Front End",
+            "company": "Seminal",
+            "titles": [
+                {
+                    "title": "Senior Software Engineer - Front End",
+                    "startDate": "12/2022",
+                    "endDate": "07/2023"
+                },
+                {
+                    "title": "Software Engineer - Front End",
+                    "startDate": "01/2022",
+                    "endDate": "12/2022"
+                }
+            ],
+            "location": "Chennai, India",
+            "responsibilities": [
+                "Led a team of 6 developers to build a responsive NFT e-commerce platform, driving end-to-end development and cross-functional collaboration.",
+                "Developed and integrated multiple micro frontends with shared state management, ensuring modular architecture, seamless integration, and reusable code.",
+                "Monitored Lighthouse metrics including First Contentful Paint (FCP), Largest Contentful Paint (LCP), accessibility, and SEO, optimizing performance to achieve 100% scores across all categories.",
+                "Optimized client performance and SEO by implementing lazy loading, memoization, SSR/ISR, image optimization, service workers, metadata (titles, descriptions, OG/Twitter tags), and migrating from React to Next.js.",
+                "Built and maintained a custom responsive component library and transformed the app into a PWA with offline support, push notifications, and efficient client-side caching for enhanced user experience."
+            ]
+        },
+        {
+            "title": "Senior Systems Engineer",
+            "company": "Infosys",
+            "titles": [
+                {
+                    "title": "Senior Systems Engineer",
+                    "startDate": "01/2021",
+                    "endDate": "01/2022"
+                },
+                {
+                    "title": "Systems Engineer",
+                    "startDate": "11/2019",
+                    "endDate": "01/2021"
+                }
+            ],
+            "location": "Chennai, India",
+            "responsibilities": [
+                "Designed, developed, and maintained a large-scale, consumer-facing React application, ensuring high performance, scalability, and intuitive UX.",
+                "Practiced Test-Driven Development (TDD) using Jest, writing and maintaining unit tests to ensure code reliability and high test coverage.",
+                "Collaborated across multiple scrum teams in an agile environment through iterative development cycles.",
+                "Developed microservices using Java Spring Boot for e-commerce applications, ensuring efficient backend functionality."
+            ]
+        }
+    ],
+    "projects": [
+        {
+            "title": "BrowserUse",
+            "url": "browser-use.com",
+            "description": [
+                "Contributed to Browser Use, an open-source project which uses LLM and Playwright to autonomously execute natural language prompts to accomplish various tasks in browser."
+            ]
+        },
+        {
+            "title": "ShopRMC",
+            "url": "shoprmc.in",
+            "description": [
+                "Built a highly responsive full-stack e-commerce platform using Next.js, leveraging AI for quick commerce, integrated as a Progressive Web App (PWA) and converted into an Android app via Trusted Web Activities (TWA), with plans for ONDC integration."
+            ]
+        }
+    ],
+    "education": [
+        {
+            "degree": "Bachelors Of Technology (B.Tech)",
+            "institution": "Amrita School of Engineering",
+            "major": "Aerospace",
+            "startDate": "06/2015",
+            "endDate": "06/2019",
+            "location": "Coimbatore, India"
+        }
+    ],
+    "achievementsAndCertificates": [
+        {
+            "title": "Won in a Figma to React Gen Al Hackathon",
+            "date": "04/2024",
+            "description": "Built an App that can create a React application based on the given Figma wireframe JSON data which uses the custom MUI component library."
+        },
+        {
+            "title": "Prompt Engineering for Developers (Coursera certification)",
+            "date": "07/2024",
+            "description": "Learned about LLM integrations through API to enhance app functionalities."
+        },
+        {
+            "title": "Best performer of the month",
+            "date": "08/2023-08/2024",
+            "description": "Received multiple times at Verizon."
+        },
+        {
+            "title": "Machine Learning Specialization (Coursera Certification)",
+            "date": "01/2025",
+            "description": "Learned about Creating, training and tuning Machine learning and basic Deeplearning modals out of own interest."
+        }
+    ]
+}

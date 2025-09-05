@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Rezoomy",
+    "version": "1.0.0",
+    "description": "AI Job application assistant",
+    "permissions": [
+        "scripting",
+        "activeTab",
+        "sidePanel"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "side_panel": {
+        "default_path": "index.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {},
+    "icons": {
+        "32": "logo32.png"
+    }
+}
