@@ -120,8 +120,8 @@ const getInputTypeInfo = (type: string) => {
   );
 };
 
-export default function App() {
-  const [inputFields, setInputFields] = useState<InputField[]>([]);
+export function Rezoomy() {
+  const [inputFields, setInputFields] = useState<InputField[]>(sampleFields);
   const [filledFields, setFilledFields] = useState<Set<string>>(new Set());
   const [isScanning, setIsScanning] = useState(false);
   const [isAllFilled, setIsAllFilled] = useState(false);
@@ -191,8 +191,6 @@ export default function App() {
         if (results && results[0]) {
           const inputFields = results[0].result as InputField[];
           setInputFields(inputFields);
-        } else {
-          console.log("No results from script execution");
         }
       }
     } catch (error) {
@@ -261,7 +259,7 @@ export default function App() {
   const isFieldFilled = (fieldId: string) => filledFields.has(fieldId);
 
   return (
-    <div className="min-h-screen bg-background dark">
+    <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-card border-b border-border">
         <div className="max-w-md mx-auto px-4 py-4">
@@ -276,7 +274,7 @@ export default function App() {
               variant="secondary"
               className="text-xs bg-blue-50 text-blue-700 border border-blue-200"
             >
-              {filledFields?.size ?? 0}/{inputFields?.length ?? 0} filled
+              {filledFields.size}/{inputFields.length} filled
             </Badge>
           </div>
 
@@ -322,87 +320,73 @@ export default function App() {
 
       {/* Input Fields List */}
       <div className="max-w-md mx-auto px-4 py-6 space-y-3">
-        {inputFields?.length ? (
-          inputFields?.map((field) => {
-            const typeInfo = getInputTypeInfo(field.type);
-            const isFilled = isFieldFilled(field.id);
+        {inputFields.map((field) => {
+          const typeInfo = getInputTypeInfo(field.type);
+          const isFilled = isFieldFilled(field.id);
 
-            return (
-              <Card
-                key={field.id}
-                className="p-3 bg-card border-border hover:border-blue-200 transition-colors"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  {/* Label, Type, and Suggested Value */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Label className="text-sm font-medium text-card-foreground">
-                        {field.label}
-                      </Label>
-                      <Badge
-                        variant="secondary"
-                        className={`text-xs px-2 py-0.5 ${typeInfo.color}`}
-                      >
-                        {typeInfo.display}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground truncate text-left">
-                      {field.value.length > 60 ? (
-                        <div className="max-h-24 overflow-auto rounded bg-muted px-2 py-1 text-xs whitespace-pre-line">
-                          {field.value}
-                        </div>
-                      ) : (
-                        field.value
-                      )}
-                    </p>
+          return (
+            <Card
+              key={field.id}
+              className="p-3 bg-card border-border hover:border-blue-200 transition-colors"
+            >
+              <div className="flex items-center justify-between gap-3">
+                {/* Label, Type, and Suggested Value */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <Label className="text-sm font-medium text-card-foreground">
+                      {field.label}
+                    </Label>
+                    <Badge
+                      variant="secondary"
+                      className={`text-xs px-2 py-0.5 ${typeInfo.color}`}
+                    >
+                      {typeInfo.display}
+                    </Badge>
                   </div>
-
-                  {/* Fill Status and Button */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    {isFilled && (
-                      <Badge
-                        variant="default"
-                        className="text-xs bg-blue-600 text-white"
-                      >
-                        Filled
-                      </Badge>
-                    )}
-                    {field.type === "file" ? (
-                      <Button
-                        size="sm"
-                        className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
-                      >
-                        <Download className="w-4 h-4" />
-                      </Button>
-                    ) : (
-                      <Button
-                        onClick={() => fillInput(field)}
-                        size="sm"
-                        className={`${
-                          isFilled
-                            ? "bg-blue-600 hover:bg-blue-700 text-white"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"
-                        }`}
-                      >
-                        {isFilled ? (
-                          <ZapOff className="w-4 h-4" />
-                        ) : (
-                          <Zap className="w-4 h-4" />
-                        )}
-                      </Button>
-                    )}
-                  </div>
+                  <p className="text-sm text-muted-foreground truncate">
+                    {field.value}
+                  </p>
                 </div>
-              </Card>
-            );
-          })
-        ) : (
-          <div className="text-center text-sm text-muted-foreground mt-10">
-            {isScanning
-              ? "Scanning for input fields..."
-              : "No input fields detected on this page. Or AI quota exceeded."}
-          </div>
-        )}
+
+                {/* Fill Status and Button */}
+                <div className="flex items-center gap-2 shrink-0">
+                  {isFilled && (
+                    <Badge
+                      variant="default"
+                      className="text-xs bg-blue-600 text-white"
+                    >
+                      Filled
+                    </Badge>
+                  )}
+                  {field.type === "file" ? (
+                    <Button
+                      size="sm"
+                      className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+                    >
+                      <Download className="w-4 h-4" />
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => fillInput(field)}
+                      size="sm"
+                      className={`${
+                        isFilled
+                          ? "bg-blue-600 hover:bg-blue-700 text-white"
+                          : "bg-blue-600 hover:bg-blue-700 text-white"
+                      }`}
+                    >
+                      {isFilled ? (
+                        <ZapOff className="w-4 h-4" />
+                      ) : (
+                        <Zap className="w-4 h-4" />
+                      )}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </Card>
+          );
+        })}
       </div>
 
       {/* Bottom Spacing */}
