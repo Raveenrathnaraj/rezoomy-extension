@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
+import { Button, Card, Badge } from "@heroui/react";
 import { Scan, Zap, ZapOff, RotateCcw, Download, Loader2 } from "lucide-react";
 
 interface InputField {
@@ -16,82 +13,6 @@ interface InputField {
   value: string;
   xpath: string;
 }
-
-const sampleFields: InputField[] = [
-  {
-    id: "1",
-    type: "text",
-    name: "firstName",
-    placeholder: "Enter your first name",
-    label: "First Name",
-    value: "John",
-    xpath: '//*[@id="firstName"]',
-  },
-  {
-    id: "2",
-    type: "textarea",
-    name: "bio",
-    placeholder: "Enter your bio",
-    label: "Bio",
-    value:
-      "Experienced software engineer with 5+ years in full-stack development...",
-    xpath: '//*[@id="bio"]',
-  },
-  {
-    id: "3",
-    type: "email",
-    name: "email",
-    placeholder: "Enter your email",
-    label: "Email Address",
-    value: "john.doe@example.com",
-    xpath: '//*[@id="email"]',
-  },
-  {
-    id: "4",
-    type: "select",
-    name: "country",
-    placeholder: "Select country",
-    label: "Country",
-    value: "United States",
-    xpath: '//*[@id="country"]',
-  },
-  {
-    id: "5",
-    type: "multiselect",
-    name: "skills",
-    placeholder: "Select skills",
-    label: "Skills",
-    value: "JavaScript, React, Node.js, Python",
-    xpath: '//*[@id="skills"]',
-  },
-  {
-    id: "6",
-    type: "radio",
-    name: "experience",
-    placeholder: "Select experience level",
-    label: "Experience Level",
-    value: "Senior (5+ years)",
-    xpath: '//*[@name="experience"]',
-  },
-  {
-    id: "7",
-    type: "checkbox",
-    name: "remote",
-    placeholder: "Remote work preference",
-    label: "Open to Remote Work",
-    value: "Yes",
-    xpath: '//*[@id="remote"]',
-  },
-  {
-    id: "8",
-    type: "file",
-    name: "resume",
-    placeholder: "Upload resume",
-    label: "Resume",
-    value: "john_doe_resume.pdf",
-    xpath: '//*[@id="resume"]',
-  },
-];
 
 const getInputTypeInfo = (type: string) => {
   const typeMap: Record<string, { display: string; color: string }> = {
@@ -125,33 +46,36 @@ export default function App() {
   const [filledFields, setFilledFields] = useState<Set<string>>(new Set());
   const [isScanning, setIsScanning] = useState(false);
   const [isAllFilled, setIsAllFilled] = useState(false);
-  const [autofillEnabled, setAutofillEnabled] = useState(true);
-  const [currentUrl, setCurrentUrl] = useState("");
 
   useEffect(() => {
-    scanPageForInputs();
     // Listen for tab updates
     if (typeof chrome !== "undefined" && chrome.tabs) {
       chrome.tabs.onUpdated.addListener((_, changeInfo, tab) => {
         if (changeInfo.status === "complete" && tab.active) {
-          scanPageForInputs();
+          // alert("API Trigger");
+          // scanPageForInputs();
         }
       });
     }
   }, []);
 
   const processData = async () => {
-    const clone = document.documentElement.cloneNode(true);
+    const clone = document.documentElement.cloneNode(true) as Element;
 
     // Collect and remove unwanted tags
     const removed = [];
-    (clone as Element).querySelectorAll("script, link, style").forEach((el) => {
-      removed.push(el.outerHTML);
-      el.remove();
+    clone
+      .querySelectorAll("script, link, style, iframe, symbol, path, svg")
+      .forEach((el) => {
+        removed.push(el.outerHTML);
+        el.remove();
+      });
+    clone.querySelectorAll("*").forEach((el) => {
+      el.removeAttribute("class");
+      el.removeAttribute("style");
     });
-
     // Log cleaned HTML
-    const cleanedHtml = (clone as Element).outerHTML;
+    const cleanedHtml = clone.outerHTML;
     console.log("Cleaned Html", cleanedHtml);
     const response = await new Promise<any>((resolve, reject) => {
       chrome.runtime.sendMessage(
@@ -182,7 +106,6 @@ export default function App() {
           active: true,
           currentWindow: true,
         });
-        setCurrentUrl(tab.url || "");
 
         const results = await chrome.scripting.executeScript({
           target: { tabId: tab.id! },
@@ -203,8 +126,6 @@ export default function App() {
   };
 
   const fillInput = async (field: InputField) => {
-    if (!autofillEnabled) return;
-
     try {
       if (typeof chrome !== "undefined" && chrome.tabs) {
         const [tab] = await chrome.tabs.query({
@@ -230,8 +151,6 @@ export default function App() {
   };
 
   const fillAllInputs = async () => {
-    if (!autofillEnabled) return;
-
     for (const field of inputFields) {
       await fillInput(field);
       // Small delay between fills to avoid overwhelming the page
@@ -261,59 +180,59 @@ export default function App() {
   const isFieldFilled = (fieldId: string) => filledFields.has(fieldId);
 
   return (
-    <div className="min-h-screen bg-background dark">
+    <div className="dark">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-card border-b border-border">
         <div className="max-w-md mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex-1 text-center">
-              <h1 className="text-3xl font-bold text-blue-600 animate-pulse font-serif tracking-wide">
-                Rezoomy
+              <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-[#0052D4] via-[#4364F7] to-[#6FB1FC] font-serif tracking-wide">
+                Rexy
               </h1>
-              <div className="h-0.5 bg-blue-500 animate-pulse mt-1 mx-auto w-20"></div>
+              <div className="h-0.5 bg-blue-500 mt-1 mx-auto w-20"></div>
             </div>
-            <Badge
-              variant="secondary"
-              className="text-xs bg-blue-50 text-blue-700 border border-blue-200"
-            >
+            {/* <Chip variant="solid">
               {filledFields?.size ?? 0}/{inputFields?.length ?? 0} filled
-            </Badge>
+            </Chip> */}
           </div>
 
           {/* Action Buttons */}
           <div className="flex gap-2 mb-2">
             <Button
-              onClick={fillAllInputs}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
-              size="sm"
+              onPress={fillAllInputs}
+              color="primary"
+              className="flex-1"
+              startContent={<Zap className="w-4 h-4" />}
             >
-              <Zap className="w-4 h-4 mr-2" />
               {isAllFilled ? "Unfill All" : "Fill All"}
             </Button>
             <Button
-              onClick={scanPageForInputs}
-              variant="outline"
-              className="flex-1 bg-transparent border-blue-200 text-blue-600 hover:bg-blue-50"
-              size="sm"
-              disabled={isScanning}
+              onPress={scanPageForInputs}
+              variant="bordered"
+              color="primary"
+              className="flex-1"
+              isDisabled={isScanning}
+              startContent={
+                isScanning ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Scan className="w-4 h-4" />
+                )
+              }
             >
-              {isScanning ? (
-                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              ) : (
-                <Scan className="w-4 h-4 mr-2" />
-              )}
               {isScanning ? "Scanning..." : "Scan Page"}
             </Button>
           </div>
 
           {filledFields.size > 0 && (
             <Button
-              onClick={handleRevertAll}
-              variant="outline"
-              className="w-full bg-transparent border-blue-200 text-blue-600 hover:bg-blue-50"
+              onPress={handleRevertAll}
+              variant="bordered"
+              color="primary"
+              className="w-full"
               size="sm"
+              startContent={<RotateCcw className="w-4 h-4" />}
             >
-              <RotateCcw className="w-4 h-4 mr-2" />
               Revert All
             </Button>
           )}
@@ -330,29 +249,25 @@ export default function App() {
             return (
               <Card
                 key={field.id}
-                className="p-3 bg-card border-border hover:border-blue-200 transition-colors"
+                className="p-3 hover:shadow-md transition-shadow"
+                shadow="none"
               >
                 <div className="flex items-center justify-between gap-3">
                   {/* Label, Type, and Suggested Value */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <Label className="text-sm font-medium text-card-foreground">
-                        {field.label}
-                      </Label>
-                      <Badge
-                        variant="secondary"
-                        className={`text-xs px-2 py-0.5 ${typeInfo.color}`}
-                      >
+                      <span className="text-sm font-medium">{field.label}</span>
+                      <Badge variant="flat" color="primary" className="text-xs">
                         {typeInfo.display}
                       </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground truncate text-left">
-                      {field.value.length > 60 ? (
+                      {field?.value?.length > 60 ? (
                         <div className="max-h-24 overflow-auto rounded bg-muted px-2 py-1 text-xs whitespace-pre-line">
-                          {field.value}
+                          {field?.value}
                         </div>
                       ) : (
-                        field.value
+                        field?.value
                       )}
                     </p>
                   </div>
@@ -361,8 +276,9 @@ export default function App() {
                   <div className="flex items-center gap-2 shrink-0">
                     {isFilled && (
                       <Badge
-                        variant="default"
-                        className="text-xs bg-blue-600 text-white"
+                        variant="solid"
+                        color="primary"
+                        className="text-xs"
                       >
                         Filled
                       </Badge>
@@ -370,19 +286,19 @@ export default function App() {
                     {field.type === "file" ? (
                       <Button
                         size="sm"
-                        className="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200"
+                        variant="bordered"
+                        color="primary"
+                        isIconOnly
                       >
                         <Download className="w-4 h-4" />
                       </Button>
                     ) : (
                       <Button
-                        onClick={() => fillInput(field)}
+                        onPress={() => fillInput(field)}
                         size="sm"
-                        className={`${
-                          isFilled
-                            ? "bg-blue-600 hover:bg-blue-700 text-white"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"
-                        }`}
+                        color="primary"
+                        variant={isFilled ? "solid" : "solid"}
+                        isIconOnly
                       >
                         {isFilled ? (
                           <ZapOff className="w-4 h-4" />
